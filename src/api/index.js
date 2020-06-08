@@ -1,10 +1,9 @@
 import md5 from 'md5';
 
-const apiRoot = "http://ws.audioscrobbler.com/2.0/";
+const apiRoot = process.env.VUE_APP_API_ROOT || "http://ws.audioscrobbler.com/2.0/";
 const apiKey = process.env.VUE_APP_API_KEY;
 const secret = process.env.VUE_APP_API_SECRET;
 
-process.env.VUE_APP_API_SECRET
 function sign(obj) {
   const request = {
     api_key: apiKey,
