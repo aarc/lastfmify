@@ -1,11 +1,11 @@
 <template>
   <div class="home">
     <p v-if="error">{{ error }}</p>
-    <UserInfo v-if="!authProblem"/>
+    <UserInfo v-if="username"/>
   </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 import UserInfo from './../components/user/';
 
 export default {
@@ -14,14 +14,10 @@ export default {
     UserInfo
   },
   computed: {
-    ...mapState({
-      error: s => s.auth.error,
-      session: s => s.auth.session,
-      sessionUser: s => s.auth.sessionUser,
-    }),
-    authProblem() {
-      return !this.sessionUser || this.sessionUser == 'undefined' || !this.session;
-    }
+    ...mapGetters({
+      error: 'getError',
+      username: 'getUserName'
+    })
   }
 }
 </script>

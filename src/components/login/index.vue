@@ -6,18 +6,18 @@
       @keyup.enter="logOut"
       role="button"
       tabindex="0">
-      Log out
+      Logout
     </a>
     <a v-else
       :href="'http://www.last.fm/api/auth/?api_key=' + apiKey"
       role="button"
     >
-      Login
+      Login with Last.fm
     </a>
   </div>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import Api from './../../api/';
 export default {
   name: 'Login',
@@ -32,13 +32,9 @@ export default {
     }),
   },
   computed: {
-    ...mapState({
-      session: s => s.auth.session,
-      sessionUser: s => s.auth.sessionUser,
-    }),
-    isAuthed() {
-      return !(!this.sessionUser || this.sessionUser == 'undefined' || !this.session);
-    }
+    ...mapGetters({
+      isAuthed: 'isAuthed'
+    })
   }
 }
 </script>

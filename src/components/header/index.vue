@@ -1,7 +1,7 @@
 <template>
   <header>
-    <Login/>
     <UserSearch/>
+    <Login/>
   </header>
 </template>
 <script>
@@ -21,14 +21,6 @@ export default {
 
     .user-search {
       flex-grow: 2;
-    }
-
-    .login {
-      order: -1;
-    }
-
-    .logout {
-      order: 99;
     }
   }
 </style>

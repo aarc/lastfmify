@@ -47,7 +47,10 @@ const auth = {
       localStorage.removeItem('sessionUser');
     },
     clearState (state) {
-      Object.assign(state, defaultState())
+      localStorage.removeItem('session');
+      localStorage.removeItem('sessionUser');
+      localStorage.removeItem('token');
+      Object.assign(state, defaultState());
     }
   },
   actions: {
@@ -87,6 +90,14 @@ const auth = {
     },
     logOut: async function ({ commit }) {
       commit('clearState');
+    }
+  },
+  getters: {
+    isAuthed: (state) => {
+      return !(!state.sessionUser || state.sessionUser == 'undefined' || !state.session);
+    },
+    getError: (state) => {
+      return state.error;
     }
   }
 };

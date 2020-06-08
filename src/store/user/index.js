@@ -78,6 +78,9 @@ const user = {
     },
   },
   getters: {
+    getUserName: (state, getters, rootState) => {
+      return state.username || rootState.auth.sessionUser;
+    },
     getUserTop: (state) => {
       return state.top;
     },
