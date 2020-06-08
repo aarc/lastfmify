@@ -18,12 +18,12 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex'
-import Config from './../../../config.js';
+import Api from './../../api/';
 export default {
   name: 'Login',
   data() {
     return {
-      apiKey: Config.apiKey
+      apiKey: Api.apiKey
     }
   },
   methods: {

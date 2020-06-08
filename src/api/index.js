@@ -1,16 +1,20 @@
 import md5 from 'md5';
-import Config from './../../config.js';
 
+const apiRoot = "http://ws.audioscrobbler.com/2.0/";
+const apiKey = process.env.VUE_APP_API_KEY;
+const secret = process.env.VUE_APP_API_SECRET;
+
+process.env.VUE_APP_API_SECRET
 function sign(obj) {
   const request = {
-    api_key: Config.apiKey,
+    api_key: apiKey,
     ...obj
   };
 
   const string = Object.keys(request)
     .sort()
     .reduce((string, key) => string + key + request[key], '');
-  const api_sig = md5(`${encodeURIComponent(string)}${Config.secret}`);
+  const api_sig = md5(`${encodeURIComponent(string)}${secret}`);
 
   return { api_sig, ...request };
 }
@@ -20,10 +24,13 @@ function getUrl(request) {
     format: 'json',
     ...sign(request)
   })
-  .reduce((a, b) => a + '&' + b.join('='), `${Config.apiRoot}?`);
+  .reduce((a, b) => a + '&' + b.join('='), `${apiRoot}?`);
 }
 const api = {
   sign,
-  getUrl
+  getUrl,
+  apiRoot,
+  apiKey,
+  secret
 }
 export default api;

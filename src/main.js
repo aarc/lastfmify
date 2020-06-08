@@ -1,3 +1,4 @@
+import dotenv from 'dotenv'; // eslint-disable-line no-unused-vars
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
