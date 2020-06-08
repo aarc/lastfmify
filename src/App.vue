@@ -21,10 +21,13 @@ export default {
     })
   },
   mounted() {
+    const query = Object.assign({}, this.$route.query);
     this.$store.dispatch('loadAuthState');
 
-    if (this.$route.query.token) {
-      this.$store.commit('setToken', this.$route.query.token);
+    if (query.token) {
+      this.$store.commit('setToken', query.token);
+      delete query.token;
+      this.$router.replace({ query });
     }
 
     if (this.token && !this.session) {
