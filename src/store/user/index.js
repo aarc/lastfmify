@@ -4,7 +4,8 @@ const user = {
   state: () => ({
     info: null,
     username: null,
-    period: 'overall',
+    processing: false,
+    period: 'overall', // overall | 7day | 1month | 3month | 6month | 12month
     top: {
       albums: {},
       artists: {},
@@ -14,7 +15,7 @@ const user = {
   }),
   mutations: {
     setProcessing (state, payload) {
-      state.proccessing = payload;
+      state.processing = payload;
     },
     setInfo (state, payload) {
       state.info = payload;
@@ -27,6 +28,9 @@ const user = {
         ...state.top,
         ...payload
       };
+    },
+    setUserPeriod (state, payload) {
+      state.period = payload;
     },
     clearUserData (state) {
       state.info = null;
@@ -46,6 +50,7 @@ const user = {
     },
     fetchUserInfo: async function ({ commit, state, rootState, dispatch }) {
       try {
+        commit("setProcessing", true);
         const response = await fetch(Api.getUrl({
           method: 'user.getInfo',
           user: state.username || rootState.auth.sessionUser,
@@ -55,10 +60,11 @@ const user = {
         if (json.error) {
           throw json.message;
         }
-
+        commit("setProcessing", false);
         commit("setInfo", json.user);
         dispatch('fetchUserTopAll');
       } catch(err) {
+        commit("setProcessing", false);
         console.error(err);
       }
     },
@@ -67,6 +73,13 @@ const user = {
         const type = checkType.toLowerCase();
         const allowedTypes = ['albums', 'artists', 'tags', 'tracks'];
         if (!allowedTypes.includes(type)) throw "Top type no allowed";
+
+        commit("setTop", {
+          [type]: {
+            ...state.top[type],
+            processing: true
+          }
+        });
 
         const response = await fetch(Api.getUrl({
           method: `user.getTop${checkType}`,
@@ -86,6 +99,10 @@ const user = {
       dispatch('fetchUserTop', 'Albums');
       dispatch('fetchUserTop', 'Tracks');
     },
+    setUserPeriod: async function ({ commit, dispatch }, period) {
+      commit('setUserPeriod', period);
+      dispatch('fetchUserTopAll');
+    }
   },
   getters: {
     getUserName: (state, getters, rootState) => {
@@ -96,6 +113,12 @@ const user = {
     },
     getUserInfo: (state) => {
       return state.info;
+    },
+    getUserPeriod: (state) => {
+      return state.period;
+    },
+    getUserProcessing: (state) => {
+      return state.processing;
     }
   }
 };

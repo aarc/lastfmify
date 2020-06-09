@@ -10,6 +10,7 @@
           {{ item }}
         </slot>
       </li>
+      <Loading v-if="processing" />
     </ol>
     <Loading v-else />
   </div>
@@ -24,6 +25,10 @@ export default {
   },
   props: {
     attr: {},
+    processing: {
+      type: Boolean,
+      default: false
+    },
     title: {
       type: String,
       default: 'List'
@@ -38,3 +43,20 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+  .list {
+    ol {
+      position: relative;
+
+      .loading {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.85);
+        height: 100%;
+        box-sizing: border-box;
+      }
+    }
+  }
+</style>

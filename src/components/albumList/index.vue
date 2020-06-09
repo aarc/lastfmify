@@ -4,6 +4,7 @@
       :classList="['album-list']"
       v-bind:attr="data['@attr']"
       v-bind:items="data.album"
+      :processing="data.processing"
       title="Top Album"
     >
       <template v-slot:item="{ item }">

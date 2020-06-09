@@ -21,4 +21,13 @@ export default {
 }
 </script>
 <style lang="scss">
+.user-search {
+  input {
+    padding: 0.25rem 0.5rem;
+  }
+
+  button {
+    padding: 0.25rem 0.5rem;
+  }
+}
 </style>
