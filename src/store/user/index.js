@@ -5,7 +5,12 @@ const user = {
     info: null,
     username: null,
     period: 'overall',
-    top: {}
+    top: {
+      albums: {},
+      artists: {},
+      tags: {},
+      tracks: {}
+    }
   }),
   mutations: {
     setProcessing (state, payload) {
@@ -25,7 +30,12 @@ const user = {
     },
     clearUserData (state) {
       state.info = null;
-      state.top = {};
+      state.top = {
+        albums: {},
+        artists: {},
+        tags: {},
+        tracks: {}
+      };
     },
   },
   actions: {

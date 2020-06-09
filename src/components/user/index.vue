@@ -7,22 +7,42 @@
       <li class='country'>{{ userInfo.country }}</li>
     </ul>
     <div class="user-charts">
-      <ArtistList :data="top.artists" title="Top Artists" />
-      <TrackList :data="top.tracks" title="Top Tracks" />
+      <ListSlot
+        v-bind:attr="top.artists['@attr']"
+        v-bind:items="top.artists.artist"
+        title="Top Artists"
+        :classList="['artist-list']"
+      >
+        <template v-slot:item="{ item }">
+          <Artist :artist="item" />
+        </template>
+      </ListSlot>
+      <ListSlot
+        v-bind:attr="top.tracks['@attr']"
+        v-bind:items="top.tracks.track"
+        title="Top Tracks"
+        :classList="['track-list']"
+      >
+        <template v-slot:item="{ item }">
+          <Track :track="item" />
+        </template>
+      </ListSlot>
+
       <AlbumList :data="top.albums" title="Top Albums" />
     </div>
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import ArtistList from './../artistList/';
+import Artist from './../artist/';
 import AlbumList from './../albumList/';
-import TrackList from './../trackList/';
+import Track from './../track/';
+import ListSlot from './../listSlot/';
 
 export default {
   name: 'userInfo',
   components: {
-    ArtistList, TrackList, AlbumList
+    Track, AlbumList, ListSlot, Artist
   },
   computed: {
     ...mapGetters({

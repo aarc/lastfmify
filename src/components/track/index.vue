@@ -8,7 +8,7 @@
 </template>
 <script>
 export default {
-  name: 'track',
+  name: 'trackItem',
   props: ['track'],
   computed: {
     imageUrl() {

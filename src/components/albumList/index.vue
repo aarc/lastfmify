@@ -1,18 +1,26 @@
 <template>
-  <div class="album-list card">
-    <h2 v-if="title" class="title">{{ title }}</h2>
-    <ol>
-      <li v-if="!data" class="message">Loading</li>
-      <li v-else v-for="(album, index) in data.album" :key="`album-${index}`"><Album :album="album" /></li>
-    </ol>
-  </div>
+  <fragment>
+    <ListSlot
+      :classList="['album-list']"
+      v-bind:attr="data['@attr']"
+      v-bind:items="data.album"
+      title="Top Album"
+    >
+      <template v-slot:item="{ item }">
+        <Album :album="item" />
+      </template>
+    </ListSlot>
+  </fragment>
 </template>
 <script>
+import { Fragment } from 'vue-fragment'
+import ListSlot from './../listSlot/';
 import Album from './../album/';
+
 export default {
   name: 'AlbumList',
   components: {
-    Album
+    Album, ListSlot, Fragment
   },
   props: {
     title: {
