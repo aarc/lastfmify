@@ -2,9 +2,12 @@
   "name": "lastfmify",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3000",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "api": "node src/server/index.js",
+    "start": "run-p serve api",
     "lint": "vue-cli-service lint"
   },
   "devDependencies": {
@@ -16,10 +19,14 @@
   },
   "dependencies": {
     "babel-eslint": "^10.1.0",
-    "dotenv": "^8.2.0",
+    "dotenv": "^16.0.0",
     "eslint": "^7.1.0",
     "eslint-plugin-vue": "^6.2.2",
+    "fastify": "^3.28.0",
+    "fastify-cors": "^6.0.3",
     "md5": "^2.2.1",
+    "node-fetch": "^3.2.3",
+    "npm-run-all": "^4.1.5",
     "vue": "^2.6.11",
     "vue-fragment": "^1.5.1",
     "vue-router": "^3.3.2",
@@ -39,5 +46,6 @@
     "parserOptions": {
       "parser": "babel-eslint"
     }
-  }
+  },
+  "type": "module"
 }

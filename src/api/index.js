@@ -1,13 +1,14 @@
 import md5 from 'md5';
 
-const apiRoot = process.env.VUE_APP_API_ROOT || "http://ws.audioscrobbler.com/2.0/";
+const apiRoot = process.env.VUE_APP_API_ROOT || 'http://localhost:3000/lastfm/';
+const apiLastRoot = 'http://ws.audioscrobbler.com/2.0/';
 const apiKey = process.env.VUE_APP_API_KEY;
 const secret = process.env.VUE_APP_API_SECRET;
 
 function sign(obj) {
   const request = {
     api_key: apiKey,
-    ...obj
+    ...obj,
   };
 
   const string = Object.keys(request)
@@ -17,19 +18,30 @@ function sign(obj) {
 
   return { api_sig, ...request };
 }
-  // http://ws.audioscrobbler.com/2.0/?method=artist.getSimilar&api_key=xxx
+
+// http://ws.audioscrobbler.com/2.0/?method=artist.getSimilar&api_key=xxx
 function getUrl(request) {
   return Object.entries({
     format: 'json',
-    ...sign(request)
-  })
-  .reduce((a, b) => a + '&' + b.join('='), `${apiRoot}?`);
+    ...sign(request),
+  }).reduce((a, b) => a + '&' + b.join('='), `${apiRoot}?`);
 }
+
+// http://ws.audioscrobbler.com/2.0/?method=artist.getSimilar&api_key=xxx
+function getLastfmUrl(request) {
+  return Object.entries({
+    format: 'json',
+    ...sign(request),
+  }).reduce((a, b) => a + '&' + b.join('='), `${apiLastRoot}?`);
+}
+
 const api = {
   sign,
   getUrl,
   apiRoot,
   apiKey,
-  secret
-}
+  secret,
+  getLastfmUrl,
+};
+
 export default api;
